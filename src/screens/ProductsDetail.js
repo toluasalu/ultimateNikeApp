@@ -1,13 +1,17 @@
 import { FlatList, StyleSheet, View, useWindowDimensions, Image, Text, ScrollView, Pressable } from "react-native";
 import products from "../data/products";
-
-
+import { productsSlice } from "../store/productsSlice";
+import { useSelector, useDispatch  } from "react-redux";
+import { cartSlice } from "../store/cartSlice";
 
 const ProductsDetailScreen = ({navigation}) => {
-  const product = products[0];
+  const dispatch = useDispatch();
+  const product =  useSelector((state) => state.products.selectedProduct)
   const { width } = useWindowDimensions();
 
+  
   const addToCart = () => {
+    dispatch(cartSlice.actions.addCartItem({product}))
     navigation.navigate("Cart");
   }
 
